@@ -60,6 +60,18 @@ def double_eights(n):
     >>> double_eights(80808080)
     False
     """
-    "*** YOUR CODE HERE ***"
+    # if only one digit, return false
+    if len(str(n))<2:
+        return False
+    # if at least two digits, perform below
+    else:
+        total, i = 0, 1
+        while i < len(str(n)) and total != 16:
+            total = int(str(n)[i-1]) + int(str(n)[i])
+            i += 1
+
+        return total == 16
+    while i < len(str(n)):
+         return  int(str(n)[i]) == 8 and int(str(n)[i+1]) == 8 
 
 
