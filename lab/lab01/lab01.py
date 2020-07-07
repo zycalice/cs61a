@@ -71,7 +71,5 @@ def double_eights(n):
             i += 1
 
         return total == 16
-    while i < len(str(n)):
-         return  int(str(n)[i]) == 8 and int(str(n)[i+1]) == 8 
 
 
