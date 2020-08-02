@@ -63,15 +63,14 @@ def double_eights(n):
     # if only one digit, return false
     if len(str(n))<2:
         return False
+    
     # if at least two digits, perform below
     else:
         total, i = 0, 1
-        while i < len(str(n)) and total != 16:
-            total = int(str(n)[i-1]) + int(str(n)[i])
+        while i < len(str(n)) and total != "88":
+            total = str(n)[i-1] + str(n)[i]
             i += 1
 
-        return total == 16
-    while i < len(str(n)):
-         return  int(str(n)[i]) == 8 and int(str(n)[i+1]) == 8 
+        return total == "88"
 
 
