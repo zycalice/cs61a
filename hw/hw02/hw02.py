@@ -138,11 +138,11 @@ def successor(n):
 
 def one(f):
     """Church numeral 1: same as successor(zero)"""
-    "*** YOUR CODE HERE ***"
+    return lambda x: f(x)
 
 def two(f):
     """Church numeral 2: same as successor(successor(zero))"""
-    "*** YOUR CODE HERE ***"
+    return lambda x: f(f(x))
 
 three = successor(two)
 
@@ -158,7 +158,10 @@ def church_to_int(n):
     >>> church_to_int(three)
     3
     """
-    "*** YOUR CODE HERE ***"
+    def add1(x):
+        return x+1
+    return n(add1)(0)
+
 
 def add_church(m, n):
     """Return the Church numeral for m + n, for Church numerals m and n.
@@ -166,7 +169,10 @@ def add_church(m, n):
     >>> church_to_int(add_church(two, three))
     5
     """
-    "*** YOUR CODE HERE ***"
+    def nested(f):
+        return lambda x: m(f)(x)+n(f)(x)
+                        #m(f)(n(f)(x)) alternatively
+    return nested
 
 def mul_church(m, n):
     """Return the Church numeral for m * n, for Church numerals m and n.
@@ -177,7 +183,10 @@ def mul_church(m, n):
     >>> church_to_int(mul_church(three, four))
     12
     """
-    "*** YOUR CODE HERE ***"
+    def nested(f):
+        return lambda x: m(f)(x)*n(f)(x)
+                        #m(n(f))(x) alternatively
+    return nested
 
 def pow_church(m, n):
     """Return the Church numeral m ** n, for Church numerals m and n.
@@ -187,5 +196,8 @@ def pow_church(m, n):
     >>> church_to_int(pow_church(three, two))
     9
     """
-    "*** YOUR CODE HERE ***"
+    def nested(f):
+        return lambda x: m(f)(x)**n(f)(x)
+                        #n(m) alternatively according to solution
+    return nested
 
