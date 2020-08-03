@@ -15,7 +15,7 @@ def lambda_curry2(func):
     3
     """
     "*** YOUR CODE HERE ***"
-    return ______
+    return lambda x:lambda y:func(x,y)
 
 
 
@@ -46,7 +46,15 @@ def count_cond(condition):
     >>> count_primes(20)   # 2, 3, 5, 7, 11, 13, 17, 19
     8
     """
-    "*** YOUR CODE HERE ***"
+    def counting(n):
+        i, count = 1,0
+        while i<=n:
+            if condition(n,i):
+                count +=1
+            i+=1
+        return count
+    return counting
+
 
 
 
@@ -61,7 +69,14 @@ def both_paths(sofar="S"):
     >>> _ = upup()
     SUU
     """
-    "*** YOUR CODE HERE ***"
+    print(sofar)
+
+    def up():
+        return both_paths(sofar+'U')
+    def down():
+        return both_paths(sofar+'D')
+
+    return up, down
 
 
 
@@ -96,7 +111,9 @@ def composite_identity(f, g):
     >>> b1(4)                            # (4 + 1)^2 != 4^2 + 1
     False
     """
-    "*** YOUR CODE HERE ***"
+    def compute(x):
+        return f(g(x)) == g(f(x))
+    return compute
 
 
 
@@ -126,5 +143,14 @@ def cycle(f1, f2, f3):
     >>> do_two_cycles(1)
     19
     """
-    "*** YOUR CODE HERE ***"
+    def dependantn(n):
+        if n==0:
+            return lambda x: x
+        elif n%3==1:
+            return lambda x: f1(dependantn(n-1)(x))
+        elif n%3==2:
+            return lambda x: f2(dependantn(n-1)(x))
+        else:
+            return lambda x: f3(dependantn(n-1)(x))
+    return dependantn
 
