@@ -20,7 +20,7 @@ def composer(func=lambda x: x):
     9
     """
     def func_adder(g):
-        "*** YOUR CODE HERE ***"
+        return composer(lambda x:func(g(x)))
     return func, func_adder
 
 
@@ -42,7 +42,10 @@ def g(n):
     >>> check(HW_SOURCE_FILE, 'g', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n<=3:
+        return n
+    else:
+        return g(n-1)+2*g(n-2)+3*g(n-3)
 
 def g_iter(n):
     """Return the value of G(n), computed iteratively.
@@ -62,7 +65,17 @@ def g_iter(n):
     >>> check(HW_SOURCE_FILE, 'g_iter', ['Recursion'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n<=3:
+        return n
+    else:
+        n1,n2,n3 = 1,2,3
+        i=4
+        while i<=n:
+            new = n3+2*n2+3*n1
+            n3,n2,n1 = new,n3,n2
+            i+=1
+        return new
+    
 
 
 def missing_digits(n):
@@ -92,7 +105,11 @@ def missing_digits(n):
     >>> check(HW_SOURCE_FILE, 'missing_digits', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if n<10:
+        return 0
+    else:
+        sec_last, last = n//10%10, n%10
+        return missing_digits(n//10)+max(0,(last-sec_last-1))
 
 
 def count_change(total):
@@ -111,7 +128,32 @@ def count_change(total):
     >>> check(HW_SOURCE_FILE, 'count_change', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    def find_expo(total):
+        if total==2:
+            return True
+        elif total%2!=0:
+            return False
+        else:
+            return find_expo(total/2)
+        
+    def find_max(total):
+        if find_expo(total)==True:
+            return total
+        else:
+            return find_max(total-1)
+
+    def partition(total,k):
+        if k==0 or total<=0:
+            return 0
+        if k==1 or total==1:
+            return 1
+        elif total<=2:
+            return total
+        else:
+            return partition((1 if (total-k) == 0 else total-k),k) + partition(total,k/2)
+        
+    return int(partition(total, find_max(total)))
+    
 
 
 def print_move(origin, destination):
@@ -146,8 +188,13 @@ def move_stack(n, start, end):
     Move the top disk from rod 1 to rod 3
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
-    "*** YOUR CODE HERE ***"
-
+    if n==1:
+        print_move(start,end)
+    else:
+        move_stack(n-1,start,6-start-end)
+        print_move(start,end)
+        move_stack(n-1,6-start-end,end)
+        
 
 from operator import sub, mul
 
@@ -161,5 +208,6 @@ def make_anonymous_factorial():
     >>> check(HW_SOURCE_FILE, 'make_anonymous_factorial', ['Assign', 'AugAssign', 'FunctionDef', 'Recursion'])
     True
     """
-    return 'YOUR_EXPRESSION_HERE'
+    return (lambda f: f(f))(lambda f: lambda x: 1 if x == 0 else x * f(f)(x - 1)) #according to answer sheet https://cs61a.org/hw/sol-hw03/
+    
 
