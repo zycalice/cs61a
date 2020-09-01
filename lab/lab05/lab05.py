@@ -205,16 +205,11 @@ def build_successors_table(tokens):
 
     table = {}
     prev = '.'
-    for word in tokens:
+    for word in tokens: # word is the successor of prev
         if prev not in table:
-            if prev == tokens[-1]:
-                table[prev]=[tokens[0]]
-            else:
-                table[prev]=[tokens[tokens.index(prev)+1]]
-        else: 
-            tokens.remove(prev)
-            if tokens[tokens.index(prev)+1] not in table[prev]:
-                table[prev].append(tokens[tokens.index(prev)+1])
+            table[prev] = [word]
+        else:
+            table[prev].append(word)
         prev = word
     return table
 
